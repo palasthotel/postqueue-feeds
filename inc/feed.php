@@ -14,7 +14,7 @@ class Feed {
 	function __construct( Plugin $plugin ) {
 		$this->plugin = $plugin;
 		$this->sub_dirs = null;
-		$this->postqueue = new \StdClass();
+		$this->postqueue = null;
 		$this->add_the_feeds();
 	}
   
@@ -25,7 +25,7 @@ class Feed {
   function add_the_feeds() {
     $postqueues = $this->get_postqueues(); // @todo postqueue_get_postqueues();
     foreach ( $postqueues as $postqueue ) {
-      $feedname = str_replace( '-', '', $postqueue->slug );
+      $feedname = $postqueue->slug;
       $this->postqueue = $postqueue;
       add_action( 'do_feed_' . $feedname , array( $this, 'add_feed' ), 10, 1 );
     }
