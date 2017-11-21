@@ -4,8 +4,6 @@ namespace PostqueueFeeds;
 
 class Feed {
 
-  private $postqueue;
-
 	/**
 	 * Feed constructor
 	 *
@@ -15,19 +13,25 @@ class Feed {
 		$this->plugin = $plugin;
 		$this->sub_dirs = null;
 		$this->postqueue = null;
-		$this->add_the_feeds();
+		add_action( 'init', array( $this, 'init' ) );
 	}
+  
+  /**
+   * Called by init action
+   * @return void
+   */
+  function init() {
+    $this->add_the_feeds();
+  }
   
   /**
    * Add the feeds to the WordPress magic
    * @return void
    */
   function add_the_feeds() {
-    $postqueues = $this->get_postqueues(); // @todo postqueue_get_postqueues();
+    $postqueues = $this->get_postqueues();
     foreach ( $postqueues as $postqueue ) {
-      $feedname = $postqueue->slug;
-      $this->postqueue = $postqueue;
-      add_action( 'do_feed_' . $feedname , array( $this, 'add_feed' ), 10, 1 );
+      add_action( 'do_feed_' . $postqueue->slug , array( $this, 'add_feed' ), 10, 2 );
     }
   }
   
@@ -35,9 +39,9 @@ class Feed {
    * Add the feed to the WordPress magic
    * @return void
    */
-  function add_feed() {
+  function add_feed( $is_comment_feed, $feedname ) {
     // modify query
-    $this->modify_query();
+    $this->modify_query( $feedname );
     load_template( $this->get_template_path( Plugin::TEMPLATE_FEED ) );
     // reset main query
     wp_reset_query();
@@ -47,21 +51,26 @@ class Feed {
    * Modifies the main query by replacing it with postqueue posts
    * @return void
    */
-  function modify_query() {
-    if ( count( $this->postqueue ) > 0 ) {
-  		$post_ids = array();
-    	foreach ( $this->postqueue as $value ) {
-    		$post_ids[] = $value->post_id;
+  function modify_query( $postqueue_slug ) {
+    if ( class_exists( '\Postqueue\Store' )) {
+      $store  = new \Postqueue\Store();
+      $queues = $store->get_queue_by_slug( $postqueue_slug );
+      
+      if ( count( $queues ) > 0 ) {
+    		$post_ids = array();
+      	foreach ( $queues as $value ) {
+      		$post_ids[] = $value->post_id;
+      	}
+      	$query_args = array(
+      		'post__in'       => $post_ids,
+      		'post_status'    => 'publish',
+      		'orderby'        => 'post__in',
+      		'post_type'      => 'any',
+      		'posts_per_page' => - 1,
+      		'nopaging'       => true,
+      	);
+      	query_posts( $query_args );
     	}
-    	$query_args = array(
-    		'post__in'       => $post_ids,
-    		'post_status'    => 'publish',
-    		'orderby'        => 'post__in',
-    		'post_type'      => 'any',
-    		'posts_per_page' => - 1,
-    		'nopaging'       => true,
-    	);
-    	query_posts( $query_args );
     }
   }
   
@@ -70,7 +79,6 @@ class Feed {
    * @return array
    */
   function get_postqueues() {
-    // @todo make it better with public functions in postqueue plugin! ;)
     if ( class_exists( '\Postqueue\Store' ) ) {
       $store  = new \Postqueue\Store();
       return $store->get_queues();
