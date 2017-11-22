@@ -9,11 +9,11 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
 
-Gives you feed for Postqueues.
+Gives you feeds for Postqueues.
 
 == Description ==
 
-This Plugin provides a RSS-feed for every given [Postqueue](https://wordpress.org/plugins/postqueue/ "Postqueue Plugin").
+This Plugin provides RSS-feeds for every given [Postqueue](https://wordpress.org/plugins/postqueue/ "Postqueue Plugin").
 
 == Installation ==
 
