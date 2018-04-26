@@ -2,7 +2,7 @@
 Contributors: palasthotel, janame
 Donate link: https://palasthotel.de/
 Tags: rss, feeds, loop, postqueue
-Requires at least: 4.9
+Requires at least: 4.0
 Tested up to: 4.9
 Stable tag: trunk
 License: GPLv3
