@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Postqueue Feeds
+ * Plugin Name: Postqueue Feeds GIT
  * Description: Provides a rss feed for every stored postqueue.
  * Version: 1.0
  * Author: Palasthotel <rezeption@palasthotel.de> (Jana Marie Eggebrecht)

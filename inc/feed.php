@@ -66,8 +66,9 @@ class Feed {
       		'post_status'    => 'publish',
       		'orderby'        => 'post__in',
       		'post_type'      => 'any',
-      		'posts_per_page' => - 1,
+      		'posts_per_page' => -1,
       		'nopaging'       => true,
+      		'ignore_sticky_posts' => 1,
       	);
       	query_posts( $query_args );
     	}
