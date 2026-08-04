@@ -44,6 +44,7 @@ class Plugin {
 	public string $url;
 	public Feed $feed;
 	public Rewrite $rewrite;
+	public PostqueueScreen $screen;
 
 	public static function get_instance(): Plugin {
 		if ( null === self::$instance ) {
@@ -60,6 +61,8 @@ class Plugin {
 		$this->dir = plugin_dir_path( __FILE__ );
 		$this->url = plugin_dir_url( __FILE__ );
 
+		add_action( 'init', array( $this, 'load_textdomain' ) );
+
 		// Feed class
 		require_once __DIR__ . '/inc/feed.php';
 		$this->feed = new Feed( $this );
@@ -67,6 +70,14 @@ class Plugin {
 		// Rewriter class
 		require_once __DIR__ . '/inc/rewrite.php';
 		$this->rewrite = new Rewrite( $this );
+
+		// The Feed column on Postqueue's own screen
+		require_once __DIR__ . '/inc/postqueue-screen.php';
+		$this->screen = new PostqueueScreen( $this );
+	}
+
+	public function load_textdomain(): void {
+		load_plugin_textdomain( self::DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 }
 

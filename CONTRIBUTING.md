@@ -60,10 +60,15 @@ repository-only.
 | `postqueue-feeds-dev.php` | development wrapper, loads `public/`; never deployed |
 | `bin/` | release helper scripts |
 
-The file name `public/postqueue-feeds-plugin.php` is deliberately unlovely and must not
-be tidied up. WordPress identifies an installed plugin by
-`<directory>/<main file>`, and that pair is what its activation state and update
-checks hang on — renaming it would deactivate the plugin on every site that has it.
+**`public/postqueue-feeds-plugin.php` must keep its name**, unlovely as it is. WordPress
+identifies an installed plugin by `<directory>/<main file>` and stores exactly that pair
+in the `active_plugins` option. Rename the file and the next update leaves every existing
+site pointing at a path that no longer exists: WordPress drops the plugin from
+`active_plugins` and greets the admin with *"The plugin has been deactivated due to an
+error: Plugin file does not exist."* The feeds stop until somebody re-activates by hand.
+
+That is worth more than a tidy name, so `postqueue-feeds.php` — the obvious name — stays
+taken by the development wrapper in the root instead.
 
 ## Local setup
 
