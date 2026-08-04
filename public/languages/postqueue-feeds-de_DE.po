@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Postqueue Feeds\n"
+"Report-Msgid-Bugs-To: https://github.com/palasthotel/postqueue-feeds/issues\n"
+"POT-Creation-Date: 2026-08-04T22:11:36+00:00\n"
+"PO-Revision-Date: 2026-08-05 00:15+0200\n"
+"Last-Translator: Palasthotel <cybertreff@palasthotel.de>\n"
+"Language-Team: Palasthotel <cybertreff@palasthotel.de>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: postqueue-feeds\n"
+
+#. Plugin Name of the plugin
+#: postqueue-feeds-plugin.php
+msgid "Postqueue Feeds"
+msgstr "Postqueue Feeds"
+
+#. Plugin URI of the plugin
+#: postqueue-feeds-plugin.php
+msgid "https://wordpress.org/plugins/postqueue-feeds/"
+msgstr ""
+
+#. Description of the plugin
+#: postqueue-feeds-plugin.php
+msgid "Provides an RSS feed for every stored postqueue."
+msgstr "Stellt für jede gespeicherte Postqueue einen RSS-Feed bereit."
+
+#. Author of the plugin
+#: postqueue-feeds-plugin.php
+msgid ""
+"Palasthotel <rezeption@palasthotel.de> (Jana Marie Eggebrecht, Edward Bock)"
+msgstr ""
+
+#. Author URI of the plugin
+#: postqueue-feeds-plugin.php
+msgid "https://palasthotel.de"
+msgstr ""
+
+#: inc/postqueue-screen.php:67
+msgctxt "postqueues screen"
+msgid "Feed"
+msgstr "Feed"

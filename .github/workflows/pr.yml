@@ -38,8 +38,7 @@ jobs:
         run: bash bin/pack.sh
 
       # The payload is what wordpress.org serves, so assert both what has to be in it
-      # and what must not - the dev wrapper above all, which would appear as a second
-      # plugin in wp-admin.
+      # and what must not.
       - name: Assert the payload is clean
         run: |
           test -f build/postqueue-feeds/postqueue-feeds-plugin.php
@@ -48,12 +47,25 @@ jobs:
           test -f build/postqueue-feeds/LICENSE
           test -f build/postqueue-feeds/inc/feed.php
           test -f build/postqueue-feeds/inc/rewrite.php
+          test -f build/postqueue-feeds/inc/postqueue-screen.php
           test -f build/postqueue-feeds/template/postqueue-feed-rss2.php
-          test ! -e build/postqueue-feeds/postqueue-feeds-dev.php
+          test -f build/postqueue-feeds/languages/postqueue-feeds-de_DE.mo
           test ! -e build/postqueue-feeds/bin
           test ! -e build/postqueue-feeds/.github
           test ! -e build/postqueue-feeds/CONTRIBUTING.md
           test ! -e build/postqueue-feeds/version.txt
+
+      # Checked two ways on purpose. By name, because the wrapper declares a plugin
+      # header of its own and shipping it would put a second "Postqueue Feeds (DEV)"
+      # entry in everybody's plugin list. And by header, because a file name is easy to
+      # change while the (DEV) marker travels with the file.
+      - name: Assert the dev wrapper is not shipped
+        run: |
+          test ! -e build/postqueue-feeds/postqueue-feeds-dev.php
+          if grep -q '(DEV)' build/postqueue-feeds/postqueue-feeds-plugin.php; then
+            echo "::error::the payload main file is the development wrapper"
+            exit 1
+          fi
 
   versions:
     name: Version carriers agree

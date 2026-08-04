@@ -24,6 +24,22 @@ covers every queue slug at once — so a postqueue created later has its feed im
 > Instructions up to version 1.0 told you to save the permalink settings after adding a
 > queue. That was true then and is not any more.
 
+## The Feed column
+
+Under **Tools → Postqueues**, where Postqueue lists the queues, this plugin adds a **Feed**
+column with each queue's address.
+
+Postqueue knows nothing about feeds and needs no code for this. Its overview is a plain
+`WP_List_Table`, so the column goes in through the two hooks a column is added to any core
+list table with — `manage_tools_page_tools-postqueue_columns` and
+`manage_tools_page_tools-postqueue_custom_column`, see
+[`public/inc/postqueue-screen.php`](public/inc/postqueue-screen.php). Without this plugin
+the column is simply not there.
+
+The address itself comes from core's `get_feed_link()`, which yields `/feed/<slug>/` where
+permalinks are enabled and `?feed=<slug>` where they are not — exactly the pair this plugin
+serves.
+
 > A queue used to be reachable as `https://example.com/my-queue.xml` as well. That is
 > gone as of 2.0.0 — the rule behind it matched *every* `.xml` address on the site, so
 > `wp-sitemap.xml` and sitemaps published by other plugins were answered with a feed and

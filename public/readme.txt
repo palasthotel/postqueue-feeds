@@ -23,6 +23,8 @@ Two addresses lead to a queue's feed, both using the queue's slug:
 
 Nothing has to be set up. Every postqueue gets its feed the moment it exists - including queues added later.
 
+Under **Tools › Postqueues**, where Postqueue lists the queues, this plugin adds a **Feed** column showing each queue's address - so it can be read off and copied where the queue is managed.
+
 = Templates =
 
 The feed is rendered from `template/postqueue-feed-rss2.php`, a copy of the RSS2 template WordPress ships. A theme can replace it by putting a file of the same name in a `plugin-parts` folder, or in any sub folder of one:
