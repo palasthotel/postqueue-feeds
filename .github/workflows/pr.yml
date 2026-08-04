@@ -57,11 +57,16 @@ jobs:
 
   versions:
     name: Version carriers agree
+    # Not on the release PR. release-please pushes it with only version.txt bumped, and
+    # update-plugin-version.yml syncs the other three carriers in a second push - so
+    # checking the first head commit is guaranteed to fail and paint a red check on
+    # every release PR before it turns green. The release job runs the same script
+    # anyway, where a mismatch aborts the deploy instead of merely reporting it.
+    if: ${{ ! startsWith(github.head_ref, 'release-please--') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
 
-      # Catches a hand-edited version long before a tag is pushed: the release job runs
-      # the very same script, where a mismatch would abort the deploy instead.
+      # Catches a hand-edited version long before a tag is pushed.
       - name: Check version numbers
         run: VERSION="$(head -n1 version.txt | tr -d '[:space:]')" bash bin/version-checker.sh

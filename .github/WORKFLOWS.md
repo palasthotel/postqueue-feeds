@@ -53,7 +53,10 @@ Three jobs:
   declares a plugin header, so shipping it would put a second "Postqueue Feeds (DEV)"
   entry in everybody's plugin list.
 - **versions** — runs `bin/version-checker.sh`, so a hand-edited version number fails
-  in the pull request instead of aborting a release.
+  in the pull request instead of aborting a release. Skipped on the release PR: that one
+  arrives with only `version.txt` bumped and gets its other three carriers in a second
+  push from `update-plugin-version.yml`, so checking its first commit would fail every
+  single time.
 
 ## `release-please.yml` — release PR
 
