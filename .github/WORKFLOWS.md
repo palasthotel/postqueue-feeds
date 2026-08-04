@@ -20,7 +20,6 @@ Push to main
     │    On release PR (opened / synchronize)
     ├──▶ [update-plugin-version.yml]
     │        Syncs the Version header in public/postqueue-feeds-plugin.php
-    │        and postqueue-feeds-dev.php
     │        + readme.txt Stable tag & changelog entry
     │
     │    On PR to main
@@ -54,9 +53,13 @@ Three jobs:
   entry in everybody's plugin list.
 - **versions** — runs `bin/version-checker.sh`, so a hand-edited version number fails
   in the pull request instead of aborting a release. Skipped on the release PR: that one
-  arrives with only `version.txt` bumped and gets its other three carriers in a second
+  arrives with only `version.txt` bumped and gets its other two carriers in a second
   push from `update-plugin-version.yml`, so checking its first commit would fail every
   single time.
+
+The development wrapper in the root is not a version carrier and nothing syncs it. It
+never ships, so its header version means nothing — and while it *was* checked, that
+decorative number could fail a release.
 
 ## `release-please.yml` — release PR
 
@@ -74,7 +77,6 @@ Runs only on the release-please PR (`startsWith(github.head_ref, 'release-please
 It reads the version from `version.txt` and writes it into:
 
 - the `Version:` header of `public/postqueue-feeds-plugin.php`
-- the `Version:` header of `postqueue-feeds-dev.php`
 - `Stable tag:` in `public/readme.txt`
 - a new `= x.y.z =` section under `== Changelog ==` in `public/readme.txt`, converted
   from the Markdown release-please wrote into `CHANGELOG.md`
@@ -86,7 +88,7 @@ workflows, which would leave the release PR without any check results.
 
 Triggered by a `v*` tag, or manually by `workflow_dispatch` with a version input.
 
-`bin/version-checker.sh` runs first and compares the tag against all four version
+`bin/version-checker.sh` runs first and compares the tag against all three version
 carriers, so a mismatch stops the run before anything is published.
 
 `bin/pack.sh` stages `public/` in `build/postqueue-feeds/` and zips it. The zip is

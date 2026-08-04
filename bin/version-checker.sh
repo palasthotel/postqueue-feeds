@@ -36,10 +36,9 @@ if [[ -z "$PLUGIN_VERSION" ]]; then
   exit 1
 fi
 
-# 4) the dev wrapper, so a developer does not see a stale version in wp-admin
-DEV_VERSION="$(grep -E '^[[:space:]]*\*?[[:space:]]*Version:[[:space:]]*[0-9]+\.[0-9]+\.[0-9]+' "$ROOT_DIR/postqueue-feeds-dev.php" \
-  | head -n1 \
-  | sed -E 's/.*Version:[[:space:]]*([0-9]+\.[0-9]+\.[0-9]+).*/\1/')"
+# The development wrapper in the root is deliberately not a version carrier. It is never
+# deployed, so its header version is decoration - and demanding that it match turned a
+# cosmetic detail into something that can block a release.
 
 fail=0
 
@@ -57,7 +56,6 @@ check_eq () {
 check_eq "version.txt" "$TXT_VERSION"
 check_eq "readme.txt Stable tag" "$README_VERSION"
 check_eq "Plugin-Header Version" "$PLUGIN_VERSION"
-check_eq "DEV-Wrapper Version" "$DEV_VERSION"
 
 if [[ "$fail" -ne 0 ]]; then
   echo "Release-Version-Check fehlgeschlagen." >&2

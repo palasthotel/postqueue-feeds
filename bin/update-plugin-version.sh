@@ -2,9 +2,11 @@
 # Syncs the plugin's version carriers after release-please opened or updated the
 # release PR:
 #   - public/postqueue-feeds-plugin.php  "Version:" header
-#   - postqueue-feeds-dev.php            "Version:" header
 #   - public/readme.txt  "Stable tag:" and a new "= x.y.z =" changelog section
 # The version is read from version.txt, which release-please bumps in the PR.
+#
+# The development wrapper in the root is not in this list. It never ships, so its header
+# version is decoration.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -30,9 +32,7 @@ sed_inplace() {
   rm -f "$2.bak"
 }
 
-# ── 1. Update the Version header in both plugin files (keeping the alignment) ─
-# The dev wrapper carries one too, so a developer does not read a stale number in
-# wp-admin - and bin/version-checker.sh refuses a release where the two disagree.
+# ── 1. Update the Version header in the plugin file (keeping the alignment) ───
 sed_inplace "s/^\( \* Version:[[:space:]]*\).*/\1$VERSION/" "$PLUGIN_PHP"
 
 # ── 2. Update Stable tag in readme.txt ──────────────────────────────────────
