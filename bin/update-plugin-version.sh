@@ -14,7 +14,6 @@ VERSION_FILE="$ROOT_DIR/version.txt"
 CHANGELOG="$ROOT_DIR/CHANGELOG.md"
 README="$ROOT_DIR/public/readme.txt"
 PLUGIN_PHP="$ROOT_DIR/public/postqueue-feeds-plugin.php"
-DEV_PHP="$ROOT_DIR/postqueue-feeds-dev.php"
 
 VERSION="$(head -n1 "$VERSION_FILE" | tr -d "[:space:]")"
 
@@ -35,7 +34,6 @@ sed_inplace() {
 # The dev wrapper carries one too, so a developer does not read a stale number in
 # wp-admin - and bin/version-checker.sh refuses a release where the two disagree.
 sed_inplace "s/^\( \* Version:[[:space:]]*\).*/\1$VERSION/" "$PLUGIN_PHP"
-sed_inplace "s/^\( \* Version:[[:space:]]*\).*/\1$VERSION/" "$DEV_PHP"
 
 # ── 2. Update Stable tag in readme.txt ──────────────────────────────────────
 sed_inplace "s/^Stable tag: .*/Stable tag: $VERSION/" "$README"

@@ -3,10 +3,9 @@
  * Plugin Name:       Postqueue Feeds (DEV)
  * Plugin URI:        https://github.com/palasthotel/postqueue-feeds
  * Description:       Development wrapper. Loads the plugin from public/, which is what ships to wordpress.org. Do not deploy this file.
- * Version:           1.0.0
- * Requires at least: 6.6
- * Tested up to:      7.0.2
- * Requires PHP:      7.4
+ * Version:           X.X.X
+ * Requires at least: X.X
+ * Tested up to:      X.X.X
  * Requires Plugins:  postqueue
  * Author:            Palasthotel <rezeption@palasthotel.de> (Jana Marie Eggebrecht, Edward Bock)
  * Author URI:        https://palasthotel.de
