@@ -1,4 +1,4 @@
-# Postqueue Feeds
+# Postqueue Feeds (WordPress-Plugin)
 
 An RSS feed for every postqueue, in the order the queue is in.
 
