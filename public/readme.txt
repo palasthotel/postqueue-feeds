@@ -21,7 +21,7 @@ Two addresses lead to a queue's feed, both using the queue's slug:
 * `https://example.com/feed/my-queue/`
 * `https://example.com/?feed=my-queue`
 
-After adding a postqueue, visit **Settings › Permalinks** once. Saving there rebuilds the rewrite rules, which is what makes the pretty address work.
+Nothing has to be set up. Every postqueue gets its feed the moment it exists - including queues added later.
 
 = Templates =
 
@@ -36,14 +36,13 @@ Child themes take precedence over parent themes.
 
 1. Install and activate [Postqueue](https://wordpress.org/plugins/postqueue/) first - without it this plugin has nothing to publish.
 2. Install Postqueue Feeds through **Plugins › Add New**, or upload it to `/wp-content/plugins/`.
-3. Activate it through the **Plugins** menu.
-4. Visit **Settings › Permalinks** and save, so the feed addresses work.
+3. Activate it through the **Plugins** menu. That is all: activating rebuilds the rewrite rules by itself.
 
 == Frequently Asked Questions ==
 
-= Why does my feed answer with a 404? =
+= Do I have to save the permalink settings? =
 
-The rewrite rules are built once and then cached. Adding a postqueue does not rebuild them, so a new queue's `/feed/<slug>/` address is unknown until they are. Visiting **Settings › Permalinks** and saving is enough. `?feed=<slug>` works without it.
+No. Activating the plugin rebuilds the rewrite rules, and the rule covers every queue slug at once - so a postqueue created afterwards has its feed straight away. Up to version 1.0 this was necessary, which is why older instructions ask for it.
 
 = Can a queue's feed still be reached as my-queue.xml? =
 
@@ -61,4 +60,4 @@ Every published post in the queue, in the queue's order, with no paging limit. S
 == Upgrade Notice ==
 
 = 2.0.0 =
-Fixes wp-sitemap.xml, which this plugin has been answering with a feed ever since WordPress 5.5 introduced it. In exchange the address my-queue.xml is gone - use /feed/my-queue/ instead. Visit Settings › Permalinks and save after updating.
+Fixes wp-sitemap.xml, which this plugin has been answering with a feed ever since WordPress 5.5 introduced it. In exchange the address my-queue.xml is gone - use /feed/my-queue/ instead.

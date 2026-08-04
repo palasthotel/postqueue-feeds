@@ -72,3 +72,21 @@ class Plugin {
 
 Plugin::get_instance();
 require_once __DIR__ . '/public-functions.php';
+
+// The feed/(.+) rule only enters the cached rewrite rules when they are rebuilt, so
+// without this /feed/<slug>/ answered 404 until somebody saved the permalink settings -
+// while ?feed=<slug> worked, which made for a puzzling first impression.
+//
+// Both hooks key off this file. Loaded through the repository's dev wrapper they do not
+// fire, because WordPress activates that file instead - in development, save the
+// permalink settings once.
+register_activation_hook( __FILE__, 'flush_rewrite_rules' );
+
+// Deactivation drops the cached rules instead of flushing them. A flush here would run
+// while this file is still loaded and its rule still hooked, so it would faithfully
+// write our rule back in - leaving /feed/<anything>/ routed at a plugin that is no
+// longer running. Emptying the option makes WordPress rebuild on the next request,
+// without us.
+register_deactivation_hook( __FILE__, function () {
+	delete_option( 'rewrite_rules' );
+} );

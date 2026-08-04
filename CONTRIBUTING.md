@@ -78,6 +78,11 @@ does nothing without Postqueue. Clone
 [palasthotel/ph-postqueue](https://github.com/palasthotel/ph-postqueue) next to this
 repository, or edit the path.
 
+Save the permalink settings once after starting, or run `wp rewrite flush`. The shipped
+plugin flushes them on activation, but that hook keys off
+`public/postqueue-feeds-plugin.php` and WordPress activates the dev wrapper instead — so
+in development it does not fire.
+
 `bash bin/pack.sh` stages the payload in `build/postqueue-feeds/` and zips it to
 `postqueue-feeds.zip` — the same payload the release deploys.
 

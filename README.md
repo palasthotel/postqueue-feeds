@@ -18,9 +18,11 @@ https://example.com/feed/my-queue/
 https://example.com/?feed=my-queue
 ```
 
-After adding a postqueue, visit **Settings › Permalinks** and save once. That rebuilds
-the rewrite rules, which is what the pretty address needs. `?feed=<slug>` works without
-it.
+Nothing needs setting up: activating the plugin rebuilds the rewrite rules, and the rule
+covers every queue slug at once — so a postqueue created later has its feed immediately.
+
+> Instructions up to version 1.0 told you to save the permalink settings after adding a
+> queue. That was true then and is not any more.
 
 > A queue used to be reachable as `https://example.com/my-queue.xml` as well. That is
 > gone as of 2.0.0 — the rule behind it matched *every* `.xml` address on the site, so
